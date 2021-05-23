@@ -55,13 +55,46 @@ function validateCred(array) {
     return total % 2 === 0 ? true : false;
 }
 
+//This returns all invalid cards that we find in the nested array
 function findInvalidCards(nestedArray) {
-    let listOfInvalid = nestedArray.filter(element => !validateCred(element));
+    const listOfInvalid = nestedArray.filter(element => !validateCred(element));
     return listOfInvalid;
 }
 
-function idInvalidCardCompanies() {
-    
+let allInvalidCardNumbers = findInvalidCards(batch);
+//console.log(allInvalidCardNumbers);
+
+//This function needs all invalid card numbers to find out which company issued these invalid numbers
+function idInvalidCardCompanies(nestedArray) {
+    const arrayOfCompanies = [];
+    nestedArray.forEach(element => {
+        //element.shift() here means we need to obtain the first digit of the array
+        switch(element.shift()) {
+            //if the first digit is 3, it's from Amex and so on ...
+            case 3:
+                element = 'Amex';
+                arrayOfCompanies.push(element);
+                break;
+            case 4:
+                element = 'Visa';
+                arrayOfCompanies.push(element);
+                break;
+            case 5:
+                element = 'Mastercard';
+                arrayOfCompanies.push(element);
+                break;
+            case 6:
+                element = 'Discover';
+                arrayOfCompanies.push(element);
+                break;
+            default:
+                element = 'Company not found';
+                break;
+        }
+    })
+    return arrayOfCompanies;
 }
 
-console.log(findInvalidCards(batch));
+console.log(idInvalidCardCompanies(allInvalidCardNumbers));
+//returns ['Amex', 'Amex', 'Visa']
+//means there are two invalid AMEX cards and one invalid VISA card
