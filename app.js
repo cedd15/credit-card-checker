@@ -52,6 +52,16 @@ function validateCred(array) {
     //adds all elements in the reversedArray including the last digit
     let total = reversedArray.reduce((accumulator, currentVal) => accumulator + currentVal, lastDigit)
     //this tells us whether the card is valid or not
-    return total % 2 === 0 ? 'valid' : 'invalid';
+    return total % 2 === 0 ? true : false;
 }
 
+function findInvalidCards(nestedArray) {
+    let listOfInvalid = nestedArray.filter(element => !validateCred(element));
+    return listOfInvalid;
+}
+
+function idInvalidCardCompanies() {
+    
+}
+
+console.log(findInvalidCards(batch));
